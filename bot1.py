@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 
-st.title(" Titan Personal Chatbot")
+st.title("Personal Chatbot")
 
 # Set OpenAI API key from Streamlit secrets
 openai_api_key = st.text_input("Enter your OpenAI API key:", type="password")
