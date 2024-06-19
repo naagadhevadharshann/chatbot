@@ -34,19 +34,22 @@ if openai_api_key:
             api_messages = [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
 
             # Request a completion from OpenAI
-            response = openai.ChatCompletion.create(
-                model=st.session_state["openai_model"],
-                messages=api_messages
-            )
+            try:
+                response = openai.ChatCompletion.create(
+                    model=st.session_state["openai_model"],
+                    messages=api_messages
+                )
 
-            # Extract the assistant's message from the response
-            assistant_message = response.choices[0].message["content"]
+                # Extract the assistant's message from the response
+                assistant_message = response.choices[0].message["content"]
 
-            # Add the assistant's message to the chat history
-            st.session_state.messages.append({"role": "assistant", "content": assistant_message})
+                # Add the assistant's message to the chat history
+                st.session_state.messages.append({"role": "assistant", "content": assistant_message})
 
-            # Display the assistant's message in the chat message container
-            st.write(f"Assistant: {assistant_message}")
+                # Display the assistant's message in the chat message container
+                st.write(f"Assistant: {assistant_message}")
+            except Exception as e:
+                st.error(f"Error: {e}")
 
 else:
     st.warning("Please enter your OpenAI API key to continue.")
